@@ -65,6 +65,12 @@ pip install -r requirements.txt
 
 ## Usage
 
+### Website Documentation
+The project also includes a simple website in the `docs/` directory, which serves as documentation and provides direct links:
+- **Download App:** Links to the latest executable (`.exe`) file available on GitHub Releases.
+- **GitHub Page:** Links to the main GitHub repository for the project.
+- **Invite Bot:** Links to invite the Discord bot to your server (requires replacing `YOUR_CLIENT_ID` in the URL with your bot's actual client ID).
+
 ### GUI Application
 1. Run the application:
 ```bash
@@ -110,6 +116,7 @@ python bot.py
 
 - OCR accuracy depends on the quality of the PDF and the Tesseract installation
 - The Discord bot creates a temporary directory for processing files, which are automatically cleaned up
+- **Custom Theme:** The GUI application uses a custom theme defined in the `themes/` directory. You can modify `themes/website_theme.json` to customize the application's appearance.
 
 ## License
 
