@@ -16,13 +16,12 @@ A comprehensive PDF processing application that combines OCR (Optical Character 
 - Tesseract OCR engine
 - Poppler (for PDF to image conversion)
 - Required Python packages:
-  ```bash
-  pip install pikepdf>=8.11.2
-  pip install pdf2image>=1.17.0
-  pip install pytesseract>=0.3.10
-  pip install discord.py>=2.3.2
-  pip install python-dotenv>=1.0.0
-  ```
+  - `pikepdf`
+  - `pdf2image`
+  - `pytesseract`
+  - `discord.py`
+  - `python-dotenv`
+  - `customtkinter`
 
 ### Installing Prerequisites
 
@@ -62,21 +61,14 @@ cd pdf-processor
 pip install -r requirements.txt
 ```
 
-Alternatively, you can install the packages individually:
-```bash
-pip install pikepdf>=8.11.2
-pip install pdf2image>=1.17.0
-pip install pytesseract>=0.3.10
-pip install discord.py>=2.3.2
-pip install python-dotenv>=1.0.0
-```
+
 
 ## Usage
 
 ### GUI Application
 1. Run the application:
 ```bash
-python pdf_cracker/pdf_processor.py
+python app.py
 ```
 
 2. The application has two main tabs:
@@ -115,7 +107,7 @@ python bot.py
 ## Notes
 
 - The brute force feature is limited to simple passwords (length 1-4 characters) by default
-- For longer passwords, modify the `range(1, 5)` in the `brute_force_pdf` method
+
 - OCR accuracy depends on the quality of the PDF and the Tesseract installation
 - The Discord bot creates a temporary directory for processing files, which are automatically cleaned up
 

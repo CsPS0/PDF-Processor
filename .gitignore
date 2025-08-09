@@ -1,6 +1,8 @@
 node_modules/
+docs/node_modules/
 
 dist/
+docs/dist/
 out/
 
 *.log

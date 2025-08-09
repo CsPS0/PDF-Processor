@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Processor & Discord Bot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#0a0f0d] text-[#d4af37] min-h-screen flex flex-col items-center justify-start p-6">
+
+  <!-- Header -->
+  <header class="w-full max-w-4xl text-center mb-8">
+    <h1 class="text-4xl font-bold tracking-wide">PDF Processor & Discord Bot</h1>
+    <p class="text-lg text-gray-400 italic">Dark elegance with modern functionality</p>
+  </header>
+
+  <!-- Tabs -->
+  <div class="flex space-x-4 border-b border-[#d4af37]/40 mb-6">
+    <button id="tab-ocr" class="px-6 py-3 rounded-t-lg text-lg font-semibold hover:bg-[#d4af37]/10 transition tab-active">
+      PDF OCR App
+    </button>
+    <button id="tab-discord" class="px-6 py-3 rounded-t-lg text-lg font-semibold hover:bg-[#d4af37]/10 transition">
+      Discord Bot
+    </button>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="w-full max-w-4xl bg-[#111814] p-6 rounded-xl shadow-lg border border-[#d4af37]/20">
+    <!-- OCR App Content -->
+    <div id="content-ocr">
+      <h2 class="text-2xl font-bold mb-4">PDF OCR Application</h2>
+      <p class="text-gray-300 mb-4">A user-friendly interface for extracting text from PDFs and unlocking password-protected documents with style.</p>
+      <ul class="list-disc list-inside space-y-2 text-gray-400">
+        <li>Extract text from PDF using OCR</li>
+        <li>Unlock password-protected PDFs</li>
+        <li>Brute force support for simple passwords</li>
+      </ul>
+      <a href="https://github.com/CsPS0/PDF-Processor" class="mt-6 px-6 py-3 bg-[#d4af37] text-black font-semibold rounded-lg shadow hover:bg-[#bfa230] transition">
+        Download App
+      </a>
+    </div>
+
+    <!-- Discord Bot Content -->
+    <div id="content-discord" class="hidden">
+      <h2 class="text-2xl font-bold mb-4">Discord Bot</h2>
+      <p class="text-gray-300 mb-4">Control your PDF OCR and unlocking directly from Discord with simple commands.</p>
+      <ul class="list-disc list-inside space-y-2 text-gray-400">
+        <li><code>pdf help</code> – Show help menu</li>
+        <li><code>pdf ocr</code> – Extract text from attached PDF</li>
+        <li><code>pdf unlock &lt;password&gt;</code> – Unlock a PDF</li>
+        <li><code>pdf bruteforce</code> – Attempt brute force unlock</li>
+      </ul>
+      <a href="https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&scope=bot&permissions=8" class="mt-6 px-6 py-3 bg-[#d4af37] text-black font-semibold rounded-lg shadow hover:bg-[#bfa230] transition">
+        Invite Bot
+      </a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-10 text-gray-500 text-sm">
+    © 2025 PDF Processor
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
