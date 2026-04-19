@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-[#0a0f0d] text-[#d4af37] min-h-screen flex flex-col items-center justify-start p-6">
+<body class="bg-[#000000] text-[#fca311] min-h-screen flex flex-col items-center justify-start p-6">
 
   <!-- Header -->
   <header class="w-full max-w-4xl text-center mb-8">
@@ -16,20 +16,20 @@
   </header>
 
   <!-- Tabs -->
-  <div class="flex space-x-4 border-b border-[#d4af37]/40 mb-6">
-    <button id="tab-ocr" class="px-6 py-3 rounded-t-lg text-lg font-semibold hover:bg-[#d4af37]/10 transition tab-active">
+  <div class="flex space-x-4 border-b border-[#fca311]/40 mb-6">
+    <button id="tab-ocr" class="px-6 py-3 rounded-t-lg text-lg font-semibold hover:bg-[#fca311]/10 transition tab-active">
       PDF OCR App
     </button>
-    <button id="tab-discord" class="px-6 py-3 rounded-t-lg text-lg font-semibold hover:bg-[#d4af37]/10 transition">
+    <button id="tab-discord" class="px-6 py-3 rounded-t-lg text-lg font-semibold opacity-50 cursor-not-allowed transition" disabled title="Currently unavailable">
       Discord Bot
     </button>
   </div>
 
   <!-- Tab Content -->
-  <div class="w-full max-w-4xl bg-[#111814] p-6 rounded-xl shadow-lg border border-[#d4af37]/20">
+  <div class="w-full max-w-4xl bg-[#14213d] p-6 rounded-xl shadow-lg border border-[#fca311]/20">
     <!-- OCR App Content -->
     <div id="content-ocr">
-      <h2 class="text-2xl font-bold mb-4">PDF OCR Application</h2>
+      <h2 class="text-2xl font-bold mb-4 text-[#e5e5e5]">PDF OCR Application</h2>
       <p class="text-gray-300 mb-4">A user-friendly interface for extracting text from PDFs and unlocking password-protected documents with style.</p>
       <ul class="list-disc list-inside space-y-2 text-gray-400">
         <li>Extract text from PDF using OCR</li>
@@ -37,10 +37,10 @@
         <li>Brute force support for simple passwords</li>
       </ul>
       <div class="mt-6 flex justify-center">
-        <a href="https://github.com/CsPS0/PDF-Processor/releases/download/v1.0.0/PDFProcessor.exe" class="px-6 py-3 bg-[#d4af37] text-black font-semibold rounded-lg shadow hover:bg-[#bfa230] transition" target="_blank">
+        <a href="https://github.com/CsPS0/PDF-Processor/releases/download/v1.0.0/PDFProcessor.exe" class="px-6 py-3 bg-[#fca311] text-[#000000] font-semibold rounded-lg shadow hover:bg-[#e08c0a] transition" target="_blank">
           Download App
         </a>
-        <a href="https://github.com/CsPS0/PDF-Processor" class="px-6 py-3 bg-[#d4af37] text-black font-semibold rounded-lg shadow hover:bg-[#bfa230] transition ml-4" target="_blank">
+        <a href="https://github.com/CsPS0/PDF-Processor" class="px-6 py-3 bg-[#fca311] text-[#000000] font-semibold rounded-lg shadow hover:bg-[#e08c0a] transition ml-4" target="_blank">
           GitHub Page
         </a>
       </div>
@@ -48,7 +48,7 @@
 
     <!-- Discord Bot Content -->
     <div id="content-discord" class="hidden">
-      <h2 class="text-2xl font-bold mb-4">Discord Bot</h2>
+      <h2 class="text-2xl font-bold mb-4 text-[#e5e5e5]">Discord Bot</h2>
       <p class="text-gray-300 mb-4">Control your PDF OCR and unlocking directly from Discord with simple commands.</p>
       <ul class="list-disc list-inside space-y-2 text-gray-400">
         <li><code>pdf help</code> – Show help menu</li>
@@ -58,7 +58,7 @@
       </ul>
       <div class="mt-6 flex justify-center">
         <!-- Remember to replace YOUR_CLIENT_ID with your actual Discord bot client ID -->
-        <a href="https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&scope=bot&permissions=8" class="px-6 py-3 bg-[#d4af37] text-black font-semibold rounded-lg shadow hover:bg-[#bfa230] transition" target="_blank">
+        <a href="https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&scope=bot&permissions=8" class="px-6 py-3 bg-[#fca311] text-[#000000] font-semibold rounded-lg shadow hover:bg-[#e08c0a] transition" target="_blank">
           Invite Bot
         </a>
       </div>
@@ -67,7 +67,7 @@
 
   <!-- Footer -->
   <footer class="mt-10 text-gray-500 text-sm">
-    © 2025 PDF Processor
+    © 2026 PDF Processor
   </footer>
 
   <script src="main.js"></script>

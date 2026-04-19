@@ -2,13 +2,15 @@
 
 A comprehensive PDF processing application that combines OCR (Optical Character Recognition) and PDF unlocking capabilities. Available as both a GUI application and a Discord bot!
 
+The project uses a clean, Service Layer architecture (`pdf_service.py`), ensuring code reusability and modularity across both interfaces.
+
 ## Features
 
-- **OCR Processing**: Extract text from PDF files and save it to a text file
+- **OCR Processing**: Extract text from PDF files and save it to a text file (powered by Tesseract).
 - **PDF Unlocking**: Remove password protection from PDF files
   - Manual password entry
-  - Brute force password cracking (for simple passwords)
-- **Discord Bot Integration**: Process PDFs directly through Discord commands
+  - Brute force password cracking (for simple passwords), where you can **freely select the character set** (numbers only, lowercase letters, etc.) for significantly faster cracking. The interface shows progress in real-time.
+- **Discord Bot Integration**: Process PDFs directly through Discord commands in an asynchronous and thread-safe manner.
 
 ## Prerequisites
 
@@ -116,7 +118,7 @@ python bot.py
 
 - OCR accuracy depends on the quality of the PDF and the Tesseract installation
 - The Discord bot creates a temporary directory for processing files, which are automatically cleaned up
-- **Custom Theme:** The GUI application uses a custom theme defined in the `themes/` directory. You can modify `themes/website_theme.json` to customize the application's appearance.
+- **Custom Theme:** The GUI application and the accompanying documentation website feature an elegant Oxford Blue (`#14213d`) and Orange Web (`#fca311`) color palette. You can modify `themes/website_theme.json` or `docs/style.css` to further customize the appearance.
 
 ## License
 

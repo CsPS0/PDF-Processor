@@ -1,13 +1,11 @@
 import discord
 from discord.ext import commands
 import os
-import pytesseract
-from pdf2image import convert_from_path
 import pikepdf
-import itertools
 import string
 import asyncio
 import tempfile
+import pdf_service
 from dotenv import load_dotenv
 
 # Bot setup
@@ -57,18 +55,7 @@ async def ocr_command(ctx):
             pdf_path = await download_attachment(attachment, temp_dir)
 
             def process():
-                images = convert_from_path(pdf_path)
-                if len(images) > MAX_PAGES:
-                    raise ValueError(f"PDF too long ({len(images)} pages). Max allowed: {MAX_PAGES}")
-
-                extracted_text = ""
-                for i, img in enumerate(images):
-                    extracted_text += f"Page {i+1}:\n{pytesseract.image_to_string(img)}\n" + "="*50 + "\n"
-
-                text_path = os.path.join(temp_dir, "extracted_text.txt")
-                with open(text_path, "w", encoding="utf-8") as f:
-                    f.write(extracted_text)
-                return text_path
+                return pdf_service.process_ocr(pdf_path, temp_dir, max_pages=MAX_PAGES)
 
             text_path = await asyncio.to_thread(process)
             await msg.edit(content="✅ Text extraction complete!")
@@ -91,10 +78,7 @@ async def unlock_command(ctx, password: str):
             pdf_path = await download_attachment(attachment, temp_dir)
 
             def unlock():
-                pdf = pikepdf.open(pdf_path, password=password)
-                output_path = os.path.join(temp_dir, "unlocked.pdf")
-                pdf.save(output_path)
-                return output_path
+                return pdf_service.unlock_pdf(pdf_path, password, temp_dir)
 
             unlocked_path = await asyncio.to_thread(unlock)
             await msg.edit(content="✅ PDF unlocked successfully!")
@@ -118,34 +102,22 @@ async def bruteforce_command(ctx):
         try:
             pdf_path = await download_attachment(attachment, temp_dir)
             characters = string.ascii_letters + string.digits
-            found = False
-
             def brute_force():
-                nonlocal found
-                total_attempts = sum(len(characters)**l for l in range(1, 5))
-                attempt_count = 0
-
-                for length in range(1, 5):
-                    for pwd_tuple in itertools.product(characters, repeat=length):
-                        password = ''.join(pwd_tuple)
-                        attempt_count += 1
-                        if attempt_count % 500 == 0:
-                            progress = attempt_count / total_attempts * 100
-                            asyncio.run_coroutine_threadsafe(msg.edit(content=f"🔍 Trying passwords... {progress:.2f}%"), bot.loop)
-
-                        try:
-                            pdf = pikepdf.open(pdf_path, password=password)
-                            output_path = os.path.join(temp_dir, "unlocked.pdf")
-                            pdf.save(output_path)
-                            found = True
-                            return password, output_path
-                        except pikepdf.PasswordError:
-                            continue
-                return None, None
+                def update_progress(current, total):
+                    progress = (current / total) * 100
+                    asyncio.run_coroutine_threadsafe(msg.edit(content=f"🔍 Trying passwords... {progress:.2f}%"), bot.loop)
+                
+                return pdf_service.brute_force_pdf(
+                    pdf_path=pdf_path,
+                    export_dir=temp_dir,
+                    max_length=4,
+                    charset=None,
+                    progress_callback=update_progress
+                )
 
             password, unlocked_path = await asyncio.to_thread(brute_force)
 
-            if found:
+            if password:
                 await msg.edit(content=f"✅ Password found: `{password}`")
                 await ctx.send(file=discord.File(unlocked_path))
             else:

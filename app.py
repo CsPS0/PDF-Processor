@@ -1,14 +1,10 @@
 import customtkinter as ctk
 from tkinter import filedialog
 import threading
-import time
-import pytesseract
-from pdf2image import convert_from_path
 import os
-import pikepdf
-import itertools
 import string
-
+import pikepdf
+import pdf_service
 import sys
 
 class PDFProcessor:
@@ -51,7 +47,7 @@ class PDFProcessor:
         self.status_label.pack()
 
     def setup_ocr_tab(self):
-        frame = ctk.CTkFrame(self.ocr_tab)
+        frame = ctk.CTkFrame(self.ocr_tab, fg_color="transparent", border_width=0)
         frame.pack(pady=20)
 
         # File selection
@@ -70,7 +66,7 @@ class PDFProcessor:
         ctk.CTkButton(self.ocr_tab, text="Start OCR", command=self.process_pdf).pack(pady=10)
 
     def setup_unlock_tab(self):
-        frame = ctk.CTkFrame(self.unlock_tab)
+        frame = ctk.CTkFrame(self.unlock_tab, fg_color="transparent", border_width=0)
         frame.pack(pady=20)
 
         # File selection
@@ -90,8 +86,14 @@ class PDFProcessor:
         self.password_entry = ctk.CTkEntry(frame, width=300, show="*")
         self.password_entry.grid(row=2, column=1, padx=5, pady=5)
 
+        # Charset for brute force
+        ctk.CTkLabel(frame, text="Brute Force Charset:").grid(row=3, column=0, padx=5, pady=5)
+        self.charset_combo = ctk.CTkComboBox(frame, values=["Alphanumeric", "Numbers Only", "Lowercase Letters", "Uppercase Letters", "All ASCII"], width=300)
+        self.charset_combo.set("Alphanumeric")
+        self.charset_combo.grid(row=3, column=1, padx=5, pady=5)
+
         # Buttons
-        button_frame = ctk.CTkFrame(self.unlock_tab)
+        button_frame = ctk.CTkFrame(self.unlock_tab, fg_color="transparent", border_width=0)
         button_frame.pack(pady=10)
         ctk.CTkButton(button_frame, text="Unlock with Password", command=self.unlock_pdf_with_password).pack(side="left", padx=5)
         ctk.CTkButton(button_frame, text="Brute Force Unlock", command=self.brute_force_pdf).pack(side="left", padx=5)
@@ -118,16 +120,7 @@ class PDFProcessor:
                 return
 
             try:
-                images = convert_from_path(pdf_path)
-                extracted_text = ""
-                for i, img in enumerate(images):
-                    extracted_text += f"Page {i+1}:\n{pytesseract.image_to_string(img)}\n"
-                    extracted_text += "=" * 50 + "\n"
-
-                output_file = os.path.join(export_path, "extracted_text.txt")
-                with open(output_file, "w", encoding="utf-8") as f:
-                    f.write(extracted_text)
-
+                output_file = pdf_service.process_ocr(pdf_path, export_path)
                 self.status_label.configure(text=f"Process completed! Saved to {output_file}")
             except Exception as e:
                 self.status_label.configure(text=f"Error: {str(e)}")
@@ -150,9 +143,7 @@ class PDFProcessor:
                 return
 
             try:
-                pdf = pikepdf.open(pdf_path, password=password)
-                unlocked_pdf_path = os.path.join(export_path, "unlocked.pdf")
-                pdf.save(unlocked_pdf_path)
+                unlocked_pdf_path = pdf_service.unlock_pdf(pdf_path, password, export_path)
                 self.status_label.configure(text=f"PDF unlocked and saved to {unlocked_pdf_path}")
             except pikepdf.PasswordError:
                 self.status_label.configure(text="Incorrect password!")
@@ -175,27 +166,37 @@ class PDFProcessor:
                 self.progress_bar.stop()
                 return
 
-            characters = string.ascii_letters + string.digits
-            found = False
+            charset_choice = self.charset_combo.get()
+            if charset_choice == "Numbers Only":
+                charset = string.digits
+            elif charset_choice == "Lowercase Letters":
+                charset = string.ascii_lowercase
+            elif charset_choice == "Uppercase Letters":
+                charset = string.ascii_uppercase
+            elif charset_choice == "All ASCII":
+                charset = string.printable.strip()
+            else: # Alphanumeric
+                charset = string.ascii_letters + string.digits
+
+            def update_progress(current, total):
+                progress_pct = (current / total) * 100
+                self.status_label.configure(text=f"Trying passwords... {progress_pct:.2f}%")
+                self.root.update_idletasks()
 
             try:
-                for length in range(1, 5):
-                    for password_tuple in itertools.product(characters, repeat=length):
-                        password = ''.join(password_tuple)
-                        try:
-                            pdf = pikepdf.open(pdf_path, password=password)
-                            unlocked_pdf_path = os.path.join(export_path, "unlocked.pdf")
-                            pdf.save(unlocked_pdf_path)
-                            self.status_label.configure(text=f"PDF unlocked with password '{password}' and saved to {unlocked_pdf_path}")
-                            found = True
-                            break
-                        except pikepdf.PasswordError:
-                            continue
-                    if found:
-                        break
-
-                if not found:
+                found_password, unlocked_pdf_path = pdf_service.brute_force_pdf(
+                    pdf_path=pdf_path, 
+                    export_dir=export_path, 
+                    max_length=4, 
+                    charset=charset, 
+                    progress_callback=update_progress
+                )
+                
+                if found_password:
+                    self.status_label.configure(text=f"PDF unlocked with password '{found_password}' and saved to {unlocked_pdf_path}")
+                else:
                     self.status_label.configure(text="Failed to unlock PDF with brute force.")
+                    
             except Exception as e:
                 self.status_label.configure(text=f"An error occurred: {str(e)}")
             finally:

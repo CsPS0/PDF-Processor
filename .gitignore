@@ -1,35 +1,69 @@
-build/
+# Python
 __pycache__/
-*.pyc
-
-node_modules/
-docs/node_modules/
-
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
 dist/
-docs/dist/
-out/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
-*.log
-*.tmp
-*.bak
-*.swp
-
-.DS_Store      # macOS
-Thumbs.db      # Windows
-Desktop.ini    # Windows
-
-.vscode/
-*.code-workspace
-
+# Virtual environments
+venv/
+.venv/
+env/
 .env
 .env.local
 
+# PyInstaller
+*.manifest
+
+# Project specific
+temp_pdf/
 config/local.json
 personal_script.sh
 
-*.bak
+# Logs and databases
+*.log
+*.sqlite
 
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# IDEs and Editors
+.vscode/
+*.code-workspace
+.idea/
+*.swp
+*.bak
+*.tmp
+*.vs
+
+# Frontend / Docs
+node_modules/
+docs/node_modules/
+docs/dist/
+out/
 *.webp
 *.jpg
-
-*.vs
