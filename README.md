@@ -1,5 +1,6 @@
-> [!NOTE]
-> **Archived Project / Alternatives:**
+> [!WARNING]
+> ## ARCHIVED
+> This repository is archived and no longer actively maintained. For production PDF processing, text extraction, and password recovery / security auditing, please use dedicated, industry-standard, and heavily optimized open-source tools:
 > This repository is archived and no longer actively maintained. For production PDF processing, text extraction, and password recovery / security auditing, please use dedicated, industry-standard, and heavily optimized open-source tools:
 >
 > - **Password Recovery & Security Auditing:**
