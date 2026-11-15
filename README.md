@@ -1,3 +1,15 @@
+> [!NOTE]
+> **Archived Project / Alternatives:**
+> This repository is archived and no longer actively maintained. For production PDF processing, text extraction, and password recovery / security auditing, please use dedicated, industry-standard, and heavily optimized open-source tools:
+>
+> - **Password Recovery & Security Auditing:**
+>   - [John the Ripper](https://en.wikipedia.org/wiki/John_the_Ripper) (`pdf2john.py` + `john`) — Industry-standard multi-hash password cracker with GPU, OpenCL, and SIMD acceleration.
+>   - [Hashcat](https://hashcat.net/hashcat/) — Highly optimized, hardware-accelerated password recovery suite with advanced rule engines.
+>   - [qpdf](https://github.com/qpdf/qpdf) — Robust CLI tool for PDF transformations, structure inspection, and password stripping.
+> - **OCR & Text Extraction:**
+>   - [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) — The official Google open-source OCR engine.
+>   - [OCRmyPDF](https://github.com/ocrmypdf/OCRmyPDF) — High-quality automated tool adding searchable text layers to scanned PDFs.
+
 # PDF Processor
 
 A comprehensive PDF processing application that combines OCR (Optical Character Recognition) and PDF unlocking capabilities. Available as both a GUI application and a Discord bot!
