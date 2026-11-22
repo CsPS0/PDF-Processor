@@ -13,62 +13,59 @@
 
 # PDF Processor
 
-A comprehensive PDF processing application that combines OCR (Optical Character Recognition) and PDF unlocking capabilities. Available as both a GUI application and a Discord bot!
+A comprehensive PDF processing application that combines OCR (Optical Character Recognition) and PDF unlocking capabilities. Available as both a desktop GUI application and a Discord bot.
 
-The project uses a clean, Service Layer architecture (`pdf_service.py`), ensuring code reusability and modularity across both interfaces.
+The project uses a clean Service Layer architecture (`pdf_service.py`), ensuring code reusability and modularity across both interfaces.
 
 ## Features
 
-- **OCR Processing**: Extract text from PDF files and save it to a text file (powered by Tesseract).
-- **PDF Unlocking**: Remove password protection from PDF files
-  - Manual password entry
-  - Brute force password cracking (for simple passwords), where you can **freely select the character set** (numbers only, lowercase letters, etc.) for significantly faster cracking. The interface shows progress in real-time.
-- **Discord Bot Integration**: Process PDFs directly through Discord commands in an asynchronous and thread-safe manner.
+- **OCR Processing**: Extract text from PDF files with multi-language support (English, Hungarian, German, French, Spanish). Powered by Tesseract OCR.
+- **PDF Unlocking**: Remove password protection from PDF files with a known password.
+- **Brute Force Cracking**: Crack PDF passwords with configurable character sets and max length (1–8 characters). Real-time progress with speed and ETA display.
+- **Cancel Operations**: Abort any long-running operation mid-process.
+- **PDF Information**: View page count, file size, and encryption status before processing.
+- **Settings Persistence**: Theme, default export directory, OCR language, and brute force settings are saved between sessions.
+- **Discord Bot Integration**: Process PDFs directly through Discord commands with charset selection.
+- **Light/Dark Theme**: Toggle between light and dark mode. Follows system preference by default.
+
+## Screenshots
+
+The GUI features a modern sidebar navigation with card-based sections, an always-visible status bar with progress tracking, and a refined Oxford Blue (`#14213d`) and Orange Web (`#fca311`) color palette.
 
 ## Prerequisites
 
-- Python 3.7 or higher
+- Python 3.8 or higher
 - Tesseract OCR engine
 - Poppler (for PDF to image conversion)
-- Required Python packages:
-  - `pikepdf`
-  - `pdf2image`
-  - `pytesseract`
-  - `discord.py`
-  - `python-dotenv`
-  - `customtkinter`
 
 ### Installing Prerequisites
 
-#### Windows:
+#### Windows
 1. Install Tesseract OCR:
-   - Download the installer from [GitHub](https://github.com/UB-Mannheim/tesseract/wiki)
+   - Download from [GitHub](https://github.com/UB-Mannheim/tesseract/wiki)
    - Add Tesseract to your system PATH
 
 2. Install Poppler:
-   - Download from [poppler releases](http://blog.alivate.com.au/poppler-windows/)
-   - Extract to a folder (e.g., C:\poppler-xx.xx.x)
-   - Add the bin folder to your system PATH
+   - Download from [poppler releases](https://github.com/oschwartz10612/poppler-windows/releases)
+   - Extract and add the `bin` folder to your system PATH
 
-#### Linux:
+#### Linux
 ```bash
 sudo apt-get update
-sudo apt-get install tesseract-ocr
-sudo apt-get install poppler-utils
+sudo apt-get install tesseract-ocr poppler-utils
 ```
 
-#### macOS:
+#### macOS
 ```bash
-brew install tesseract
-brew install poppler
+brew install tesseract poppler
 ```
 
 ## Installation
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/yourusername/pdf-processor.git
-cd pdf-processor
+git clone https://github.com/CsPS0/PDF-Processor.git
+cd PDF-Processor
 ```
 
 2. Install Python dependencies:
@@ -76,63 +73,84 @@ cd pdf-processor
 pip install -r requirements.txt
 ```
 
-
-
 ## Usage
 
-### Website Documentation
-The project also includes a simple website in the `docs/` directory, which serves as documentation and provides direct links:
-- **Download App:** Links to the latest executable (`.exe`) file available on GitHub Releases.
-- **GitHub Page:** Links to the main GitHub repository for the project.
-- **Invite Bot:** Links to invite the Discord bot to your server (requires replacing `YOUR_CLIENT_ID` in the URL with your bot's actual client ID).
-
 ### GUI Application
-1. Run the application:
+
 ```bash
 python app.py
 ```
 
-2. The application has two main tabs:
+The application has four sections accessible via the sidebar:
 
-#### OCR Tab
-- Click "Browse" to select a PDF file
-- Choose an export directory
-- Click "Start OCR" to begin text extraction
-- The extracted text will be saved to a text file in the chosen directory
+#### OCR
+- Select a PDF file and export directory
+- Choose the OCR language (English, Hungarian, German, French, Spanish)
+- Click "Start OCR" to extract text
+- View progress page-by-page in the status bar
+- Cancel mid-operation if needed
 
-#### Unlock PDF Tab
-- Click "Browse" to select a password-protected PDF
-- Choose an export directory
-- Either:
-  - Enter the known password and click "Unlock with Password"
-  - Click "Brute Force Unlock" to attempt to crack the password
+#### Unlock PDF
+- Select a password-protected PDF
+- Enter the known password
+- Click "Unlock PDF" to remove protection
+
+#### Brute Force
+- Select a password-protected PDF
+- Choose a character set (Alphanumeric, Numbers Only, Lowercase, Uppercase, Letters Only, All ASCII)
+- Set max password length (1–8 characters)
+- Click "Start Brute Force" to begin cracking
+- Monitor speed (attempts/second) and ETA in the status bar
+- Cancel at any time
+
+#### Settings
+- Choose theme (System, Light, Dark)
+- Set default export directory
+- Set default OCR language
+- Set default brute force max length
+- Save or reset to defaults
 
 ### Discord Bot
-1. Create a new Discord application and bot at [Discord Developer Portal](https://discord.com/developers/applications)
-2. Get your bot token
-3. Create a `.env` file in the project root and add your token:
+
+1. Create a Discord application at [Discord Developer Portal](https://discord.com/developers/applications)
+2. Create a `.env` file:
 ```
 DISCORD_TOKEN=<your-bot-token-here>
 ```
-4. Run the bot:
+3. Run the bot:
 ```bash
 python bot.py
 ```
 
 #### Bot Commands
-- `pdf help` - Show help message
-- `pdf ocr` - Extract text from a PDF file (attach the PDF to your message)
-- `pdf unlock <password>` - Unlock a PDF with a password (attach the PDF)
-- `pdf bruteforce` - Attempt to crack the PDF password (attach the PDF)
+- `pdf help` — Show help message with available commands
+- `pdf ocr` — Extract text from an attached PDF
+- `pdf unlock <password>` — Unlock an attached PDF with a password
+- `pdf bruteforce [charset]` — Crack an attached PDF password (charsets: `alphanumeric`, `numbers`, `lowercase`, `uppercase`, `letters`, `all`)
+
+### Documentation Website
+
+The `docs/` directory contains a static documentation website with download links and feature information. Open `docs/index.html` in a browser.
+
+## Architecture
+
+```
+app.py          → GUI (customtkinter, sidebar layout)
+bot.py          → Discord bot (discord.py)
+pdf_service.py  → Shared service layer (OCR, unlock, brute force)
+config.py       → Persistent settings management
+exceptions.py   → Custom exception hierarchy
+themes/         → CustomTkinter theme JSON
+docs/           → Documentation website
+```
 
 ## Notes
 
-- The brute force feature is limited to simple passwords (length 1-4 characters) by default
-
-- OCR accuracy depends on the quality of the PDF and the Tesseract installation
-- The Discord bot creates a temporary directory for processing files, which are automatically cleaned up
-- **Custom Theme:** The GUI application and the accompanying documentation website feature an elegant Oxford Blue (`#14213d`) and Orange Web (`#fca311`) color palette. You can modify `themes/website_theme.json` or `docs/style.css` to further customize the appearance.
+- Brute force max length is configurable from 1 to 8 characters. Higher values with large charsets take significantly longer.
+- OCR accuracy depends on PDF quality and the Tesseract language packs installed.
+- Output files use safe naming to avoid overwriting existing files.
+- The application checks for Tesseract and Poppler on startup and warns if missing.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License — see the LICENSE file for details.

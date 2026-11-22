@@ -3,71 +3,275 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PDF Processor & Discord Bot</title>
+  <title>PDF Processor — Extract, Unlock & Crack PDFs</title>
+  <meta name="description" content="Extract text with OCR, unlock protected PDFs, and crack passwords with brute force. Available as a desktop app and Discord bot.">
+  <meta name="theme-color" content="#14213d">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            oxford: '#14213d',
+            orange: '#fca311',
+            dark: '#0a0a0a',
+            navy: '#0d1729',
+          },
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-[#000000] text-[#fca311] min-h-screen flex flex-col items-center justify-start p-6">
+<body class="bg-dark text-[#f0f0f0] font-inter min-h-screen flex flex-col">
 
-  <!-- Header -->
-  <header class="w-full max-w-4xl text-center mb-8">
-    <h1 class="text-4xl font-bold tracking-wide">PDF Processor & Discord Bot</h1>
-    <p class="text-lg text-gray-400 italic">Dark elegance with fast functionality</p>
+  <div class="hero-glow"></div>
+
+  <header class="w-full max-w-6xl mx-auto px-6 py-6 flex items-center justify-between relative z-10">
+    <a href="#" class="flex items-center gap-3 group">
+      <div class="w-10 h-10 rounded-lg bg-orange/10 border border-orange/20 flex items-center justify-center group-hover:bg-orange/20 transition-all duration-300">
+        <svg class="w-5 h-5 text-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+        </svg>
+      </div>
+      <span class="text-lg font-semibold text-[#f0f0f0]">PDF Processor</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-6">
+      <a href="#features" class="text-sm text-[#f0f0f0]/60 hover:text-orange transition-colors duration-200">Features</a>
+      <a href="#platforms" class="text-sm text-[#f0f0f0]/60 hover:text-orange transition-colors duration-200">Platforms</a>
+      <a href="https://github.com/CsPS0/PDF-Processor" target="_blank" class="text-sm text-[#f0f0f0]/60 hover:text-orange transition-colors duration-200 flex items-center gap-1.5">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </nav>
   </header>
 
-  <!-- Tabs -->
-  <div class="flex space-x-4 border-b border-[#fca311]/40 mb-6">
-    <button id="tab-ocr" class="px-6 py-3 rounded-t-lg text-lg font-semibold hover:bg-[#fca311]/10 transition tab-active">
-      PDF OCR App
-    </button>
-    <button id="tab-discord" class="px-6 py-3 rounded-t-lg text-lg font-semibold opacity-50 cursor-not-allowed transition" disabled title="Currently unavailable">
-      Discord Bot
-    </button>
-  </div>
+  <main class="flex-1 relative z-10">
 
-  <!-- Tab Content -->
-  <div class="w-full max-w-4xl bg-[#14213d] p-6 rounded-xl shadow-lg border border-[#fca311]/20">
-    <!-- OCR App Content -->
-    <div id="content-ocr">
-      <h2 class="text-2xl font-bold mb-4 text-[#e5e5e5]">PDF OCR Application</h2>
-      <p class="text-gray-300 mb-4">A user-friendly interface for extracting text from PDFs and unlocking password-protected documents with style.</p>
-      <ul class="list-disc list-inside space-y-2 text-gray-400">
-        <li>Extract text from PDF using OCR</li>
-        <li>Unlock password-protected PDFs</li>
-        <li>Brute force support for simple passwords</li>
-      </ul>
-      <div class="mt-6 flex justify-center">
-        <a href="https://github.com/CsPS0/PDF-Processor/releases/download/v1.1.0/PDFProcessor_v1.1.0.exe" class="px-6 py-3 bg-[#fca311] text-[#000000] font-semibold rounded-lg shadow hover:bg-[#e08c0a] transition" target="_blank">
+    <section id="hero" class="w-full max-w-6xl mx-auto px-6 pt-16 pb-24 text-center">
+      <div class="hero-fade-in">
+        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-orange/10 text-orange border border-orange/20 mb-8">
+          <span class="w-1.5 h-1.5 rounded-full bg-orange animate-pulse"></span>
+          v2.0.0
+        </span>
+      </div>
+      <h1 class="hero-fade-in hero-delay-1 text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-b from-[#f0f0f0] to-[#f0f0f0]/50 bg-clip-text text-transparent leading-tight">
+        PDF Processor
+      </h1>
+      <p class="hero-fade-in hero-delay-2 mt-6 text-lg md:text-xl text-[#f0f0f0]/50 max-w-2xl mx-auto leading-relaxed">
+        Extract, unlock, and crack PDF documents with ease.
+      </p>
+      <div class="hero-fade-in hero-delay-3 mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="https://github.com/CsPS0/PDF-Processor/releases" target="_blank" id="btn-download" class="cta-btn cta-primary px-8 py-3.5 rounded-xl text-sm font-semibold flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V3"/>
+          </svg>
           Download App
         </a>
-        <a href="https://github.com/CsPS0/PDF-Processor" class="px-6 py-3 bg-[#fca311] text-[#000000] font-semibold rounded-lg shadow hover:bg-[#e08c0a] transition ml-4" target="_blank">
-          GitHub Page
+        <a href="https://github.com/CsPS0/PDF-Processor" target="_blank" id="btn-github" class="cta-btn cta-secondary px-8 py-3.5 rounded-xl text-sm font-semibold flex items-center gap-2">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
         </a>
       </div>
-    </div>
+    </section>
 
-    <!-- Discord Bot Content -->
-    <div id="content-discord" class="hidden">
-      <h2 class="text-2xl font-bold mb-4 text-[#e5e5e5]">Discord Bot</h2>
-      <p class="text-gray-300 mb-4">Control your PDF OCR and unlocking directly from Discord with simple commands.</p>
-      <ul class="list-disc list-inside space-y-2 text-gray-400">
-        <li><code>pdf help</code> – Show help menu</li>
-        <li><code>pdf ocr</code> – Extract text from attached PDF</li>
-        <li><code>pdf unlock &lt;password&gt;</code> – Unlock a PDF</li>
-        <li><code>pdf bruteforce</code> – Attempt brute force unlock</li>
-      </ul>
-      <div class="mt-6 flex justify-center">
-        <!-- Remember to replace YOUR_CLIENT_ID with your actual Discord bot client ID -->
-        <a href="https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&scope=bot&permissions=8" class="px-6 py-3 bg-[#fca311] text-[#000000] font-semibold rounded-lg shadow hover:bg-[#e08c0a] transition" target="_blank">
-          Invite Bot
-        </a>
+    <section id="features" class="w-full max-w-6xl mx-auto px-6 pb-24">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl md:text-4xl font-bold text-[#f0f0f0]">Core Features</h2>
+        <p class="mt-3 text-[#f0f0f0]/40 text-base">Everything you need to handle PDF documents.</p>
       </div>
-    </div>
-  </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <article class="feature-card glass-card rounded-2xl p-7">
+          <div class="w-12 h-12 rounded-xl bg-orange/10 border border-orange/20 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-orange" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-[#f0f0f0] mb-2">OCR Text Extraction</h3>
+          <p class="text-sm text-[#f0f0f0]/45 leading-relaxed">Extract text from any PDF with multi-language support. Handles scanned documents and image-based pages.</p>
+        </article>
+        <article class="feature-card glass-card rounded-2xl p-7">
+          <div class="w-12 h-12 rounded-xl bg-orange/10 border border-orange/20 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-orange" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-[#f0f0f0] mb-2">Password Unlock</h3>
+          <p class="text-sm text-[#f0f0f0]/45 leading-relaxed">Unlock protected PDFs with a known password. Instantly remove restrictions and access your documents.</p>
+        </article>
+        <article class="feature-card glass-card rounded-2xl p-7">
+          <div class="w-12 h-12 rounded-xl bg-orange/10 border border-orange/20 flex items-center justify-center mb-5">
+            <svg class="w-6 h-6 text-orange" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-[#f0f0f0] mb-2">Brute Force</h3>
+          <p class="text-sm text-[#f0f0f0]/45 leading-relaxed">Crack PDF passwords with configurable charsets and real-time ETA. Full control over character sets and length.</p>
+        </article>
+      </div>
+    </section>
 
-  <!-- Footer -->
-  <footer class="mt-10 text-gray-500 text-sm">
-    © 2026 PDF Processor
+    <section id="platforms" class="w-full max-w-6xl mx-auto px-6 pb-24">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl md:text-4xl font-bold text-[#f0f0f0]">Available Platforms</h2>
+        <p class="mt-3 text-[#f0f0f0]/40 text-base">Use PDF Processor where it fits your workflow.</p>
+      </div>
+
+      <div class="flex justify-center mb-8">
+        <div class="inline-flex rounded-xl bg-[#14213d]/40 border border-[#f0f0f0]/5 p-1.5">
+          <button id="tab-desktop" class="tab-btn tab-active px-6 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25h-13.5A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25h-13.5A2.25 2.25 0 013 12V5.25"/>
+            </svg>
+            Desktop App
+          </button>
+          <button id="tab-discord" class="tab-btn px-6 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/>
+            </svg>
+            Discord Bot
+          </button>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-2xl p-8 md:p-10 tab-content-wrapper">
+        <div id="content-desktop" class="tab-content tab-content-active">
+          <div class="flex flex-col md:flex-row gap-10">
+            <div class="flex-1">
+              <h3 class="text-2xl font-bold text-[#f0f0f0] mb-2">Desktop Application</h3>
+              <p class="text-[#f0f0f0]/45 text-sm mb-6">A native Windows application built with Python and CustomTkinter.</p>
+              <ul class="space-y-4">
+                <li class="flex items-start gap-3">
+                  <div class="w-6 h-6 rounded-md bg-orange/10 border border-orange/20 flex items-center justify-center mt-0.5 shrink-0">
+                    <svg class="w-3.5 h-3.5 text-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                  </div>
+                  <div>
+                    <span class="text-sm font-medium text-[#f0f0f0]">Sidebar Navigation</span>
+                    <p class="text-xs text-[#f0f0f0]/35 mt-0.5">Quick access to all tools from a persistent sidebar.</p>
+                  </div>
+                </li>
+                <li class="flex items-start gap-3">
+                  <div class="w-6 h-6 rounded-md bg-orange/10 border border-orange/20 flex items-center justify-center mt-0.5 shrink-0">
+                    <svg class="w-3.5 h-3.5 text-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                  </div>
+                  <div>
+                    <span class="text-sm font-medium text-[#f0f0f0]">PDF Info Panel</span>
+                    <p class="text-xs text-[#f0f0f0]/35 mt-0.5">View metadata, page count, and encryption status.</p>
+                  </div>
+                </li>
+                <li class="flex items-start gap-3">
+                  <div class="w-6 h-6 rounded-md bg-orange/10 border border-orange/20 flex items-center justify-center mt-0.5 shrink-0">
+                    <svg class="w-3.5 h-3.5 text-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                  </div>
+                  <div>
+                    <span class="text-sm font-medium text-[#f0f0f0]">Cancel Operations</span>
+                    <p class="text-xs text-[#f0f0f0]/35 mt-0.5">Safely abort long-running tasks at any time.</p>
+                  </div>
+                </li>
+                <li class="flex items-start gap-3">
+                  <div class="w-6 h-6 rounded-md bg-orange/10 border border-orange/20 flex items-center justify-center mt-0.5 shrink-0">
+                    <svg class="w-3.5 h-3.5 text-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                  </div>
+                  <div>
+                    <span class="text-sm font-medium text-[#f0f0f0]">Settings Persistence</span>
+                    <p class="text-xs text-[#f0f0f0]/35 mt-0.5">Your preferences are saved between sessions.</p>
+                  </div>
+                </li>
+                <li class="flex items-start gap-3">
+                  <div class="w-6 h-6 rounded-md bg-orange/10 border border-orange/20 flex items-center justify-center mt-0.5 shrink-0">
+                    <svg class="w-3.5 h-3.5 text-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                  </div>
+                  <div>
+                    <span class="text-sm font-medium text-[#f0f0f0]">Light & Dark Theme</span>
+                    <p class="text-xs text-[#f0f0f0]/35 mt-0.5">Switch between themes to match your preference.</p>
+                  </div>
+                </li>
+              </ul>
+              <div class="mt-8">
+                <a href="https://github.com/CsPS0/PDF-Processor/releases" target="_blank" class="cta-btn cta-primary inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V3"/>
+                  </svg>
+                  Download Latest Release
+                </a>
+              </div>
+            </div>
+            <div class="hidden md:flex flex-1 items-center justify-center">
+              <div class="w-full max-w-sm aspect-[4/3] rounded-2xl bg-gradient-to-br from-oxford/80 to-navy border border-[#f0f0f0]/5 flex items-center justify-center">
+                <div class="text-center">
+                  <svg class="w-16 h-16 text-orange/30 mx-auto mb-3" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25h-13.5A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25h-13.5A2.25 2.25 0 013 12V5.25"/>
+                  </svg>
+                  <p class="text-xs text-[#f0f0f0]/20 font-medium">Windows Desktop App</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="content-discord" class="tab-content">
+          <div class="flex flex-col md:flex-row gap-10">
+            <div class="flex-1">
+              <h3 class="text-2xl font-bold text-[#f0f0f0] mb-2">Discord Bot</h3>
+              <p class="text-[#f0f0f0]/45 text-sm mb-6">Control PDF Processor directly from your Discord server.</p>
+              <div class="space-y-4">
+                <div class="flex items-start gap-4 p-4 rounded-xl bg-[#14213d]/30 border border-[#f0f0f0]/5">
+                  <code class="text-orange text-sm font-medium shrink-0 bg-orange/10 px-2.5 py-1 rounded-md">/pdf ocr</code>
+                  <p class="text-sm text-[#f0f0f0]/45 pt-0.5">Extract text from an attached PDF using optical character recognition.</p>
+                </div>
+                <div class="flex items-start gap-4 p-4 rounded-xl bg-[#14213d]/30 border border-[#f0f0f0]/5">
+                  <code class="text-orange text-sm font-medium shrink-0 bg-orange/10 px-2.5 py-1 rounded-md">/pdf unlock</code>
+                  <p class="text-sm text-[#f0f0f0]/45 pt-0.5">Unlock a password-protected PDF with a known password.</p>
+                </div>
+                <div class="flex items-start gap-4 p-4 rounded-xl bg-[#14213d]/30 border border-[#f0f0f0]/5">
+                  <code class="text-orange text-sm font-medium shrink-0 bg-orange/10 px-2.5 py-1 rounded-md">/pdf bruteforce</code>
+                  <p class="text-sm text-[#f0f0f0]/45 pt-0.5">Attempt to crack a PDF password using brute force with configurable settings.</p>
+                </div>
+                <div class="flex items-start gap-4 p-4 rounded-xl bg-[#14213d]/30 border border-[#f0f0f0]/5">
+                  <code class="text-orange text-sm font-medium shrink-0 bg-orange/10 px-2.5 py-1 rounded-md">/pdf help</code>
+                  <p class="text-sm text-[#f0f0f0]/45 pt-0.5">Display all available commands and usage instructions.</p>
+                </div>
+              </div>
+              <div class="mt-8">
+                <a href="https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&scope=bot&permissions=8" target="_blank" class="cta-btn cta-primary inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/>
+                  </svg>
+                  Invite Bot to Server
+                </a>
+              </div>
+            </div>
+            <div class="hidden md:flex flex-1 items-center justify-center">
+              <div class="w-full max-w-sm aspect-[4/3] rounded-2xl bg-gradient-to-br from-[#5865F2]/10 to-navy border border-[#5865F2]/10 flex items-center justify-center">
+                <div class="text-center">
+                  <svg class="w-16 h-16 text-[#5865F2]/30 mx-auto mb-3" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/>
+                  </svg>
+                  <p class="text-xs text-[#f0f0f0]/20 font-medium">Discord Integration</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="relative z-10 w-full border-t border-[#f0f0f0]/5">
+    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-[#f0f0f0]/30">&copy; 2026 PDF Processor &middot; Built with Python</p>
+      <a href="https://github.com/CsPS0/PDF-Processor" target="_blank" class="text-sm text-[#f0f0f0]/30 hover:text-orange transition-colors duration-200 flex items-center gap-1.5">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </div>
   </footer>
 
   <script src="main.js"></script>
